@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashMap;
+import java.util.stream.IntStream;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -22,7 +23,8 @@ public class Controller {
 	private View view;
 	private Benutzer benutzer;
 	private Partner partner;
-	private HashMap <String, Benutzer> map = new HashMap <String, Benutzer> ();
+	private HashMap<String, Benutzer> map = new HashMap <String, Benutzer> ();
+	//private HashMap <Integer, Benutzer> map = new HashMap <Integer, Benutzer> ();
 	
 	public void setView(View view) {
 		this.view = view;
@@ -106,7 +108,8 @@ public class Controller {
 								benutzerGeschlecht);
 		
 		//Benutzer Objekt zum HashMap hinzufügen
-		map.put(benutzerVorname, benutzer);
+		map.put(benutzerNachname, benutzer);
+		//map.put(benutzerAlter, benutzer);
 		//System.out.println(benutzer.getNachname());
 		
 	}
@@ -124,20 +127,26 @@ public class Controller {
 		
 		partner = new Partner(partnerAlterVon, partnerAlterBis, partnerEigenschaft, partnerGeschlecht);
 		
+//		IntStream range = IntStream.range(partnerAlterVon, partnerAlterBis);
+//		for ( map.keySet(): range) {
+//			
+//		}
+		
 		for (Benutzer benutzer : map.values()) {
-			System.out.println(""  + benutzer.getNachname());
+			//System.out.println(""  + benutzer.getNachname());
 		    if (partner.getMinAlter() <= benutzer.getAlter() && benutzer.getAlter() <= partner.getMaxAlter()) {
 		    		if (partner.getGeschlecht() == benutzer.getGeschlecht()) {
 		    			if (partner.getEigenschaft() == benutzer.getEigenschaft1() || partner.getEigenschaft() == benutzer.getEigenschaft2()) {
 		    				
 		    					//TO DO
 		    					System.out.println(""  + benutzer.getNachname());
+		    					System.out.println("" + benutzer.getAlter());
 		    			}
 		    		}
 		    }
-		    else {
-		    	System.out.println("Leider keine Matches gefunden");
-		    }
+//		    else {
+//		    	System.out.println("Leider keine Matches gefunden");
+//		    }
 		}
 	}
 	
