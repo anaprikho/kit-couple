@@ -143,11 +143,11 @@ public class Controller {
 		    					System.out.println("" + benutzer.getAlter());
 		    			}
 		    		}
-		    }
+		    }System.out.println("Leider keine Matches gefunden");
 //		    else {
 //		    	System.out.println("Leider keine Matches gefunden");
 //		    }
-		}
+		}//System.out.println("Leider keine Matches gefunden");
 	}
 	
 	
