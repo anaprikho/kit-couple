@@ -37,7 +37,7 @@ public class View extends JFrame {
 		private JComboBox <String> benutzerEigenschaftenComboBox1;
 		private JComboBox <String> benutzerEigenschaftenComboBox2;
 		private JLabel frage;
-		private String benutzerEigenschaftenListe[] = {"Baden-Württemberg", "Bayern",
+		private String benutzerEigenschaftenListe[] = {"", "Baden-Württemberg", "Bayern",
 	            "Berlin", "Brandenburg", "Bremen",
 	            "Hamburg", "Hessen", "Mecklenburg-Vorpommern",
 	            "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
@@ -65,7 +65,7 @@ public class View extends JFrame {
 			return partnerEigenschaftenLabel;
 		}
 
-		private String partnerEigenschaftenListe[] = {"Baden-Württemberg", "Bayern",
+		private String partnerEigenschaftenListe[] = {"","Baden-Württemberg", "Bayern",
 	            "Berlin", "Brandenburg", "Bremen",
 	            "Hamburg", "Hessen", "Mecklenburg-Vorpommern",
 	            "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
@@ -136,28 +136,28 @@ public class View extends JFrame {
         benutzerEigenschaftenPanel.add(benutzerEigenschaftenLabel);
                 
         //JComboBox mit Charaktereigenschaften wird erstellt
-        JComboBox benutzerEigenschaftenComboBox1 = new JComboBox <String> (benutzerEigenschaftenListe);
+        benutzerEigenschaftenComboBox1 = new JComboBox <String> (benutzerEigenschaftenListe);
         benutzerEigenschaftenComboBox1.setFont(fontBeschreibung);
-        benutzerEigenschaftenComboBox1.addItemListener(new ItemListener() {
-        	
-                // Listening if a new items of the combo box has been selected.
-                public void itemStateChanged(ItemEvent event) {
-                    JComboBox comboBox = (JComboBox) event.getSource();
-
-                    // The item affected by the event.
-                    Object item = event.getItem();
-
-                    if (event.getStateChange() == ItemEvent.SELECTED) {
-                        System.out.println(item.toString() + " selected.");
-                    }
+//        benutzerEigenschaftenComboBox1.addItemListener(new ItemListener() {
+//        	
+//                // Listening if a new items of the combo box has been selected.
+//                public void itemStateChanged(ItemEvent event) {
+//                    JComboBox comboBox = (JComboBox) event.getSource();
 //
-//                    if (event.getStateChange() == ItemEvent.DESELECTED) {
-//                    	System.out.println(item.toString() + " deselected.");
+//                    // The item affected by the event.
+//                    Object item = event.getItem();
+//
+//                    if (event.getStateChange() == ItemEvent.SELECTED) {
+//                        System.out.println(item.toString() + " selected.");
 //                    }
-                }
-        });
+////
+////                    if (event.getStateChange() == ItemEvent.DESELECTED) {
+////                    	System.out.println(item.toString() + " deselected.");
+////                    }
+//                }
+//        });
         
-        JComboBox benutzerEigenschaftenComboBox2 = new JComboBox <String> (benutzerEigenschaftenListe);
+        benutzerEigenschaftenComboBox2 = new JComboBox <String> (benutzerEigenschaftenListe);
         benutzerEigenschaftenComboBox2.setFont(fontBeschreibung);
         
         benutzerEigenschaftenPanel.add(benutzerEigenschaftenComboBox1);
@@ -170,12 +170,12 @@ public class View extends JFrame {
         benutzerGeschlechtPanel = new JPanel();
         //benutzerGeschlechtPanel.setBorder(new TitledBorder(null, "Ihr Geschlecht", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         benutzerGeschlechtPanel.setLayout(new GridLayout(3, 3, 10, 0));
-        String benutzerGeschlechtListe[] = {"maennlich", "weiblich", "diverse"};
+        String benutzerGeschlechtListe[] = {"", "maennlich", "weiblich", "diverse"};
         
         JLabel benutzerGeschlechtLabel = new JLabel("Ihr Geschlecht");
         benutzerGeschlechtPanel.add(benutzerGeschlechtLabel);
         
-        JComboBox benutzerGeschlechtComboBox = new JComboBox <String> (benutzerGeschlechtListe);
+        benutzerGeschlechtComboBox = new JComboBox <String> (benutzerGeschlechtListe);
         
         benutzerGeschlechtPanel.add(benutzerGeschlechtComboBox);
         c.add(benutzerGeschlechtPanel);
@@ -223,12 +223,12 @@ public class View extends JFrame {
 		partnerGeschlechtPanel = new JPanel();
         //partnerGeschlechtPanel.setBorder(new TitledBorder(null, "Geschlecht von Partner", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         partnerGeschlechtPanel.setLayout(new GridLayout(3, 3, 10, 0));
-        String partnerGeschlechtListe[] = {"maennlich", "weiblich", "diverse"};
+        String partnerGeschlechtListe[] = {"", "maennlich", "weiblich", "diverse"};
         
         JLabel partnerGeschlechtLabel = new JLabel("Geschlecht von Partner");
         partnerGeschlechtPanel.add(partnerGeschlechtLabel);
         
-        JComboBox partnerGeschlechtComboBox = new JComboBox(partnerGeschlechtListe);
+        partnerGeschlechtComboBox = new JComboBox <String> (partnerGeschlechtListe);
         
         partnerGeschlechtPanel.add(partnerGeschlechtComboBox);
         c.add(partnerGeschlechtPanel);
@@ -236,7 +236,7 @@ public class View extends JFrame {
         //Panel für Eigenschaft von Partner
         partnerEigenschaftenPanel = new JPanel();
         partnerEigenschaftenPanel.setLayout(new GridLayout(1, 3, 10, 0));
-        JComboBox partnerEigenschaftenComboBox = new JComboBox <String>(partnerEigenschaftenListe);
+        partnerEigenschaftenComboBox = new JComboBox <String>(partnerEigenschaftenListe);
         partnerEigenschaftenComboBox.setFont(fontBeschreibung);
         
 		JLabel partnerEigenschaftenLabel = new JLabel("1 Charaktereigenschaft von Partner");
@@ -246,15 +246,22 @@ public class View extends JFrame {
         c.add(partnerEigenschaftenPanel);
         
 		//Match Button
-		matchButton = new JButton("Match");
+		matchButton = new JButton("Match finden");
 		matchButton.setFont(fontBeschreibung);
 		c.add(matchButton);
 	}
 			
 		public void setController(Controller controller) {
 		this.controller = controller;
-		benutzerEigenschaftenComboBox1.addItemListener(this.controller);
 		
+		//JComboBox ItemListener
+		benutzerEigenschaftenComboBox1.addItemListener(this.controller.getItemChangeListener());
+		benutzerEigenschaftenComboBox2.addItemListener(this.controller.getItemChangeListener());
+		benutzerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
+		partnerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
+		partnerEigenschaftenComboBox.addItemListener(this.controller.getItemChangeListener());
+		
+		//JButtons ActionListener
 		saveButton.addActionListener(this.controller.getSaveButtonListener());//neu
 		matchButton.addActionListener(this.controller.getMatchButtonListener());//überprüfen
 		this.addWindowListener(this.controller.getBeendenListener());

@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.HashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -16,11 +17,12 @@ import KITCoupleModel.Benutzer;
 import KITCoupleModel.Partner;
 import KITCoupleView.View;
 
-public class Controller implements ItemListener {
+public class Controller {
 	
 	private View view;
 	private Benutzer benutzer;
 	private Partner partner;
+	private HashMap <String, Benutzer> map = new HashMap <String, Benutzer> ();
 	
 	public void setView(View view) {
 		this.view = view;
@@ -36,6 +38,10 @@ public class Controller implements ItemListener {
 	
 	public BeendenListener getBeendenListener() {
 		return new BeendenListener();
+	}
+	
+	public ItemChangeListener getItemChangeListener() {
+		return new ItemChangeListener();
 	}
 	
 	/**
@@ -63,35 +69,45 @@ public class Controller implements ItemListener {
 			matchen();
 		}
 	}
+	class ItemChangeListener implements ItemListener{
+	    @Override
+	    public void itemStateChanged(ItemEvent event) {
+	       if (event.getStateChange() == ItemEvent.SELECTED) {
+	         
+	          //JComboBox comboBox = (JComboBox) event.getSource();
+
+	          // The item affected by the event.
+	          Object item = event.getItem();
+
+//	          if (event.getStateChange() == ItemEvent.SELECTED) {
+//	              System.out.println(item.toString());
+//	          }
+	       }
+	      
+		}       
+	}
 		
 	/**
-	 * Diese Methode erzeugt eine neue Rechenaufgabe und stellt sie dar.
-	 * Der Zahlenraum ist abhängig von der gewählten Schwierigkeit
+	 * Diese Methode bekommt die vom User eingegebenen Daten und erzeugt ein Benutzer Objekt.
 	 * 
 	 */
 	public void speicher() {
-//		String vorname = "lnl";
-//		String nachname = "kjb";
-//		int alter = 16;
-//		String eig1 = "iuu";
-//		String eig2 = "obn";
-//		String geschlecht = "m";
-//		benutzer = new Benutzer(vorname, nachname,alter, eig1, eig2, geschlecht);
-//		
-//		System.out.println(nachname);
-		
-		
+
 		String benutzerVorname = view.getBenutzerVornameFeld().getText();
 		String benutzerNachname = view.getBenutzerNachnameFeld().getText();
 		int benutzerAlter = Integer.valueOf (view.getBenutzerAlterFeld().getText()).intValue();
 		//String benutzerEigenschaft1 = (String)view.getBenutzerEigenschaftenComboBox1().getSelectedItem();
-		//String benutzerEigenschaft1 = String.valueOf(view.getBenutzerEigenschaftenComboBox1().getSelectedItem());
-		//String benutzerEigenschaft2 = (String)view.getBenutzerEigenschaftenComboBox2().getSelectedItem();
-		//String benutzerGeschlecht = (String)view.getBenutzerGeschlechtComboBox().getSelectedItem();
-
-		//System.out.println(view.getBenutzerEigenschaftenComboBox1());
-//		benutzer = new Benutzer(benutzerVorname, benutzerNachname, benutzerAlter, benutzerEigenschaft1, benutzerEigenschaft2,
-//								benutzerGeschlecht);
+		String benutzerEigenschaft1 = String.valueOf(view.getBenutzerEigenschaftenComboBox1().getSelectedItem());
+		String benutzerEigenschaft2 = String.valueOf(view.getBenutzerEigenschaftenComboBox1().getSelectedItem());
+		String benutzerGeschlecht = (String)view.getBenutzerGeschlechtComboBox().getSelectedItem();
+		
+		//Benutzer Objekt erzeugen
+		benutzer = new Benutzer(benutzerVorname, benutzerNachname, benutzerAlter, benutzerEigenschaft1, benutzerEigenschaft2,
+								benutzerGeschlecht);
+		
+		//Benutzer Objekt zum HashMap hinzufügen
+		map.put(benutzerVorname, benutzer);
+		//System.out.println(benutzer.getNachname());
 		
 	}
 	
@@ -100,23 +116,30 @@ public class Controller implements ItemListener {
 	 * 
 	 */
 	public void matchen() {
-//		
-//		int partnerAlterVon = Integer.valueOf(view.getPartnerAlterVon().getText()).intValue();
-//		int partnerAlterBis = Integer.valueOf(view.getPartnerAlterBis().getText()).intValue();
-//		String partnerEigenschaft = (String)view.getPartnerEigenschaftenComboBox().getSelectedItem();
-//		String partnerGeschlecht = (String)view.getPartnerGeschlechtComboBox().getSelectedItem();
-//		
-		//partner = new Partner(partnerAlterVon, partnerAlterBis, partnerEigenschaft, partnerGeschlecht);
 		
-//		for (Benutzer benutzer : mapBenutzer.values()) {
-//		    if partnerAlterVon )=< benutzer.getAlter() < partnerAlterBis
-//		    		if 
-//		    			if
-//		    				if
-//		    					Array.push
-//		}
+		int partnerAlterVon = Integer.valueOf(view.getPartnerAlterVon().getText()).intValue();
+		int partnerAlterBis = Integer.valueOf(view.getPartnerAlterBis().getText()).intValue();
+		String partnerEigenschaft = (String)view.getPartnerEigenschaftenComboBox().getSelectedItem();
+		String partnerGeschlecht = (String)view.getPartnerGeschlechtComboBox().getSelectedItem();
+		
+		partner = new Partner(partnerAlterVon, partnerAlterBis, partnerEigenschaft, partnerGeschlecht);
+		
+		for (Benutzer benutzer : map.values()) {
+			System.out.println(""  + benutzer.getNachname());
+		    if (partner.getMinAlter() <= benutzer.getAlter() && benutzer.getAlter() <= partner.getMaxAlter()) {
+		    		if (partner.getGeschlecht() == benutzer.getGeschlecht()) {
+		    			if (partner.getEigenschaft() == benutzer.getEigenschaft1() || partner.getEigenschaft() == benutzer.getEigenschaft2()) {
+		    				
+		    					//TO DO
+		    					System.out.println(""  + benutzer.getNachname());
+		    			}
+		    		}
+		    }
+		    else {
+		    	System.out.println("Leider keine Matches gefunden");
+		    }
+		}
 	}
-	
 	
 	
 	/**
@@ -140,7 +163,7 @@ public class Controller implements ItemListener {
 		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
-			int eingabe = JOptionPane.showConfirmDialog(null, "Wollen Sie das Rechentraining wirklich beenden?", "Beenden", JOptionPane.YES_NO_CANCEL_OPTION);
+			int eingabe = JOptionPane.showConfirmDialog(null, "Wollen Sie das Programm wirklich beenden?", "Beenden", JOptionPane.YES_NO_CANCEL_OPTION);
 			if (eingabe == JOptionPane.YES_OPTION) {
 				System.exit(0);
 			}
@@ -175,23 +198,10 @@ public class Controller implements ItemListener {
 		 */
 		@Override
 		public void windowDeactivated(WindowEvent e) {	}
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent ie) {
-		// TODO Auto-generated method stub
 		
-//		JComboBox source = (JComboBox) ie.getSource();
-//		Container c = (Container) source.getParent();
-		
-        JComboBox comboBox = (JComboBox) ie.getSource();
-
-        // The item affected by the event.
-        Object item = ie.getItem();
-
-        if (ie.getStateChange() == ItemEvent.SELECTED) {
-            System.out.println(item.toString() + " selected.");
-        }
 	}
-
 }
+		
+
+	
+
