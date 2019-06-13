@@ -111,12 +111,33 @@ public class Controller {
 	 */
 	public void speicher() {
 		//Werte bekommen
+		JFrame dialog = new JFrame();
 		String benutzerVorname = view.getBenutzerVornameFeld().getText();
 		String benutzerNachname = view.getBenutzerNachnameFeld().getText();
-		int benutzerAlter = Integer.valueOf (view.getBenutzerAlterFeld().getText()).intValue();
 		String benutzerEigenschaft1 = String.valueOf(view.getBenutzerEigenschaftenComboBox1().getSelectedItem());
-		String benutzerEigenschaft2 = String.valueOf(view.getBenutzerEigenschaftenComboBox1().getSelectedItem());
+		String benutzerEigenschaft2 = String.valueOf(view.getBenutzerEigenschaftenComboBox2().getSelectedItem());
 		String benutzerGeschlecht = (String)view.getBenutzerGeschlechtComboBox().getSelectedItem();
+		
+		//Auf leere Felder prüfen
+		if (benutzerVorname.isEmpty() || benutzerNachname.isEmpty() || view.getBenutzerAlterFeld().getText().isEmpty() || 
+				benutzerEigenschaft1.isEmpty() || benutzerEigenschaft2.isEmpty() || benutzerGeschlecht.isEmpty()) {
+			JOptionPane.showMessageDialog(dialog, "Bitte alle Felder befüllen!");
+			//Stehen bleiben
+			return;
+		}
+		//Prüfen, ob Alter eine Zahl ist
+		String copyBenutzerAlter = view.getBenutzerAlterFeld().getText();
+		if (copyBenutzerAlter.replaceAll("\\d","").length() > 0) {
+			JOptionPane.showMessageDialog(dialog, "Alter muss eine Zahl sein!");
+			return;
+		}
+		//Prüfen, ob Alter zwichen 16 und 99 liegt
+		if (Integer.valueOf (copyBenutzerAlter).intValue() < 16 || Integer.valueOf (copyBenutzerAlter).intValue() > 99) {
+			JOptionPane.showMessageDialog(dialog, "Sie müssen zwischen 16 und 99 Jahre alt sein!");
+			return;
+		}
+		//Wenn alles OK, den Wert bekommen 
+		int benutzerAlter = Integer.valueOf (view.getBenutzerAlterFeld().getText()).intValue();
 		
 		//Benutzer Objekt erzeugen
 		benutzer = new Benutzer(benutzerVorname, benutzerNachname, benutzerAlter, benutzerEigenschaft1, benutzerEigenschaft2,
@@ -141,10 +162,41 @@ public class Controller {
 	 */
 	public void matchen() {
 		//Werte bekommen
-		int partnerAlterVon = Integer.valueOf(view.getPartnerAlterVon().getText()).intValue();
-		int partnerAlterBis = Integer.valueOf(view.getPartnerAlterBis().getText()).intValue();
+		JFrame dialog = new JFrame();
 		String partnerEigenschaft = (String)view.getPartnerEigenschaftenComboBox().getSelectedItem();
 		String partnerGeschlecht = (String)view.getPartnerGeschlechtComboBox().getSelectedItem();
+		
+		//Auf leere Felder prüfen
+		if (view.getPartnerAlterVon().getText().isEmpty() || view.getPartnerAlterBis().getText().isEmpty() ||
+				partnerGeschlecht.isEmpty() || partnerEigenschaft.isEmpty()) {
+			JOptionPane.showMessageDialog(dialog, "Bitte alle Felder befüllen!");
+			//Stehen bleiben
+			return;
+		}
+		//Prüfen, ob Alter eine Zahl ist
+		String copyPartnerAlterVon = view.getPartnerAlterVon().getText();
+		if (copyPartnerAlterVon.replaceAll("\\d","").length() > 0) {
+			JOptionPane.showMessageDialog(dialog, "Alter muss eine Zahl sein!");
+			return;
+		}
+		String copyPartnerAlterBis = view.getPartnerAlterBis().getText();
+		if (copyPartnerAlterBis.replaceAll("\\d","").length() > 0) {
+			JOptionPane.showMessageDialog(dialog, "Alter muss eine Zahl sein!");
+			return;
+		}
+		//Prüfen, ob Alter zwichen 16 und 99 liegt
+		if (Integer.valueOf (copyPartnerAlterVon).intValue() < 16 || Integer.valueOf (copyPartnerAlterBis).intValue() > 99) {
+			JOptionPane.showMessageDialog(dialog, "Partner kann nur zwischen 16 und 99 Jahre alt sein!");
+			return;
+		}
+		if (Integer.valueOf (copyPartnerAlterVon).intValue() > Integer.valueOf (copyPartnerAlterBis).intValue()) {
+			JOptionPane.showMessageDialog(dialog, "Feld 'von' kann nicht größer als 'bis' sein! Bitte geben Sie die Richtige Fole an");
+			return;
+		}
+		//Wenn alles OK, den Wert bekommen 
+		int partnerAlterVon = Integer.valueOf(view.getPartnerAlterVon().getText()).intValue();
+		int partnerAlterBis = Integer.valueOf(view.getPartnerAlterBis().getText()).intValue();
+
 		
 		wishedPartner = new Partner(partnerAlterVon, partnerAlterBis, partnerEigenschaft, partnerGeschlecht);
 		
@@ -158,9 +210,10 @@ public class Controller {
 			ArrayList<Benutzer> list = map.get(pointer);
 			if (list == null) continue;
 			for (Benutzer potentialPartner : list) {
-				if (potentialPartner.getGeschlecht() == wishedPartner.getGeschlecht()) {
+				if (potentialPartner.getGeschlecht() == wishedPartner.getGeschlecht() || potentialPartner.getGeschlecht() == null) {
 					if (wishedPartner.getEigenschaft() == potentialPartner.getEigenschaft1() ||
-							wishedPartner.getEigenschaft() == potentialPartner.getEigenschaft2()) {
+							wishedPartner.getEigenschaft() == potentialPartner.getEigenschaft2() ||
+							wishedPartner.getEigenschaft() == null) {
 						matchesList.add(potentialPartner);
 					}
 				}
@@ -174,6 +227,7 @@ public class Controller {
 		//}
 		//Liste mit Matches konvertieren
 		ArrayList<String> convertedList= convertToListOfStrings(matchesList);
+		if(!convertedList.isEmpty())System.out.println(convertedList);
 		saveToFile(convertedList);
 	}
 	/**
