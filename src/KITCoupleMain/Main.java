@@ -4,9 +4,9 @@ import KITCoupleController.Controller;
 import KITCoupleView.View;
 
 /**
- * Diese Klasse enthält die main-Methode des Rechentrainers
+ * Diese Klasse enthält die main-Methode des KIT Couple Programmes
  * 
- * @author Hannah Theuer, Jonas Lehner
+ * @author Anastasia Prikhodina
  * @version 1.0
  * 
  */
@@ -16,7 +16,7 @@ public class Main {
 	private static View view;
 
 	/**
-	 * main-Methode des Rechentrainers
+	 * main-Methode des KIT Couple Programmes 
 	 * @param args Kommandozeilenparameter
 	 */
 	public static void main(String[] args) {

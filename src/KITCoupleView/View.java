@@ -1,8 +1,6 @@
 package KITCoupleView;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.TreeSet;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -10,11 +8,10 @@ import javax.swing.border.*;
 import KITCoupleController.Controller;
 
 /**
- * Diese Klasse stellt das Fester für den Rechentrainer dar.
- * Außerdem wird die Ereignisbehandlung für die Buttons hier implementiert.
+ * Diese Klasse stellt das Fester für das KIT Couple Programm dar.
  * 
  * @author Anastasia Prikhodina upywg
- * 
+ * @version 1.0
  */
 @SuppressWarnings("serial")
 public class View extends JFrame {
@@ -26,51 +23,39 @@ public class View extends JFrame {
 		//ContentPane
 		private Container c;
 		
-		//Erstes Panel für Name und Alter (Textfelder)
+		//Panel für Name und Alter von Benutzer (JTextField)
 		private JPanel benutzerInputPanel;
 		private JTextField benutzerVornameFeld;
 		private JTextField benutzerNachnameFeld;
 		private JTextField benutzerAlterFeld;
 		
-		//Zweites Panel für Charaktereigenschaften (JListe)
+		//Panel für 2 Charaktereigenschaften von Benutzer
 		private JPanel benutzerEigenschaftenPanel;
 		private JComboBox <String> benutzerEigenschaftenComboBox1;
 		private JComboBox <String> benutzerEigenschaftenComboBox2;
-		private JLabel frage;
-		private String benutzerEigenschaftenListe[] = {"", "Baden-Württemberg", "Bayern",
-	            "Berlin", "Brandenburg", "Bremen",
-	            "Hamburg", "Hessen", "Mecklenburg-Vorpommern",
-	            "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
-	            "Saarland", "Sachsen", "Sachsen-Anhalt",
-	            "Schleswig-Holstein", "Thüringen"};
+		//Liste mit Eigenschaften definieren
+		private String benutzerEigenschaftenListe[] = {"", "friedlich", "harmoniebedürftig", "selbstbewusst", "schüchtern", "enthusiastisch",
+				"kreativ", "freundlich", "ehrgeizig"};
 		
-		//Drittes Panel für Geschlecht (JRadioButtons)
+		//Panel für Geschlecht von Benutzer (JComboBox)
 		private JPanel benutzerGeschlechtPanel;
-		private JComboBox benutzerGeschlechtComboBox;
+		private JComboBox <String> benutzerGeschlechtComboBox;
 		
-		//Panel Alter von Partner
+		//Panel Alter von Partner (JTextField)
 		private JPanel partnerAlterPanel;
 		private JTextField partnerAlterVon;
 		private JTextField partnerAlterBis;
 		
-		//Panel Geschlecht von Partner
+		//Panel Geschlecht von Partner (JComboBox)
 		private JPanel partnerGeschlechtPanel;
 		private JComboBox <String> partnerGeschlechtComboBox;
 		
-		//Panel Eigenschaft von Partner
+		//Panel 1 Eigenschaft von Partner (JComboBox)
 		private JPanel partnerEigenschaftenPanel;
 		private JComboBox <String> partnerEigenschaftenComboBox;
-		private JLabel partnerEigenschaftenLabel;
-		public JLabel getPartnerEigenschaftenLabel() {
-			return partnerEigenschaftenLabel;
-		}
-
-		private String partnerEigenschaftenListe[] = {"","Baden-Württemberg", "Bayern",
-	            "Berlin", "Brandenburg", "Bremen",
-	            "Hamburg", "Hessen", "Mecklenburg-Vorpommern",
-	            "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
-	            "Saarland", "Sachsen", "Sachsen-Anhalt",
-	            "Schleswig-Holstein", "Thüringen"};
+		//Liste mit Eigenschaften definieren
+		private String partnerEigenschaftenListe[] = {"", "friedlich", "harmoniebedürftig", "selbstbewusst", "schüchtern", "enthusiastisch",
+				"kreativ", "freundlich", "ehrgeizig"};
 		
 		//Save Button
 		private JButton saveButton;
@@ -80,27 +65,22 @@ public class View extends JFrame {
 		
 		/**
 		 * Konstruktor des Views
-		 * @param model
+		 * @param string
 		 */
 		public View(String string) {//String titel
 		
-		//this.model = model;
 		//Allgemeine Einstellungen
-		setTitle("Couple - KIT");
+		setTitle(string);
 		setSize(200,200);
-		//setBounds(100, 100, 400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setFont( new Font( "Helvetica", Font.BOLD, 28) );
 		c = getContentPane();
 		((JPanel) c).setBorder(new EmptyBorder(5, 5, 5, 5));
-		c.setLayout(new GridLayout(0,1));//4, 1, 10, 10
+		c.setLayout(new GridLayout(0,1));
 		fontBeschreibung = new Font("Tahoma", Font.PLAIN, 20);
 		fontTextfelder = new Font("Tahoma", Font.PLAIN, 16);
 		
-		//Erstes Panel für Name und Alter (Textfelder)
+		//Panel für Name und Alter von Benutzer (JTextField)
 		benutzerInputPanel = new JPanel();
-		//benutzerInputPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		//benutzerInputPanel.setLayout(new SpringLayout());
 		benutzerInputPanel.setLayout(new GridLayout(3, 3, 10, 0));
 		
 		JLabel benutzerVornameLabel = new JLabel("Ihr Vorname");
@@ -127,9 +107,8 @@ public class View extends JFrame {
 
 		c.add(benutzerInputPanel);
 		
-		//Zweites Panel Charaktereigenschaften
+		//Panel für 2 Charaktereigenschaften von Benutzer (JComboBox)
 		benutzerEigenschaftenPanel = new JPanel();
-		//benutzerEigenschaftenPanel.setBorder(new TitledBorder(null, "Ihre Charaktereigenschaften", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		benutzerEigenschaftenPanel.setLayout(new GridLayout(1, 3, 10, 0));
 		
 		JLabel benutzerEigenschaftenLabel = new JLabel("Ihre 2 Charaktereigenschaften");
@@ -138,25 +117,7 @@ public class View extends JFrame {
         //JComboBox mit Charaktereigenschaften wird erstellt
         benutzerEigenschaftenComboBox1 = new JComboBox <String> (benutzerEigenschaftenListe);
         benutzerEigenschaftenComboBox1.setFont(fontBeschreibung);
-//        benutzerEigenschaftenComboBox1.addItemListener(new ItemListener() {
-//        	
-//                // Listening if a new items of the combo box has been selected.
-//                public void itemStateChanged(ItemEvent event) {
-//                    JComboBox comboBox = (JComboBox) event.getSource();
-//
-//                    // The item affected by the event.
-//                    Object item = event.getItem();
-//
-//                    if (event.getStateChange() == ItemEvent.SELECTED) {
-//                        System.out.println(item.toString() + " selected.");
-//                    }
-////
-////                    if (event.getStateChange() == ItemEvent.DESELECTED) {
-////                    	System.out.println(item.toString() + " deselected.");
-////                    }
-//                }
-//        });
-        
+
         benutzerEigenschaftenComboBox2 = new JComboBox <String> (benutzerEigenschaftenListe);
         benutzerEigenschaftenComboBox2.setFont(fontBeschreibung);
         
@@ -166,9 +127,8 @@ public class View extends JFrame {
         benutzerEigenschaftenPanel.add(benutzerEigenschaftenComboBox2);
         c.add(benutzerEigenschaftenPanel);
 		
-		//Drittes Panel für Geschlecht (JComboBox)
+		//Panel für Geschlecht von Benutzer(JComboBox)
         benutzerGeschlechtPanel = new JPanel();
-        //benutzerGeschlechtPanel.setBorder(new TitledBorder(null, "Ihr Geschlecht", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         benutzerGeschlechtPanel.setLayout(new GridLayout(3, 3, 10, 0));
         String benutzerGeschlechtListe[] = {"", "maennlich", "weiblich", "diverse"};
         
@@ -179,27 +139,13 @@ public class View extends JFrame {
         
         benutzerGeschlechtPanel.add(benutzerGeschlechtComboBox);
         c.add(benutzerGeschlechtPanel);
-        /*benutzerMaennlich = new JRadioButton("m");;
-		benutzerWeiblich = new JRadioButton("w");
-		benutzerDiverse = new JRadioButton("d");
-		
-		
-		benutzerGeschlecht = new ButtonGroup();
-		benutzerGeschlecht.add(benutzerMaennlich);
-		benutzerGeschlecht.add(benutzerWeiblich);
-		benutzerGeschlecht.add(benutzerDiverse);
-		
-		benutzerGeschlechtPanel.add(benutzerMaennlich);
-		benutzerGeschlechtPanel.add(benutzerWeiblich);
-		benutzerGeschlechtPanel.add(benutzerDiverse);
-		c.add(benutzerGeschlechtPanel);*/
         
         //Save Button
         saveButton = new JButton("Daten speichern");
         saveButton.setFont(fontBeschreibung);
 		c.add(saveButton);
 		
-        //Panel Alter von Partner
+        //Panel Alter von Partner (JTextField)
         partnerAlterPanel = new JPanel();
         partnerAlterPanel.setBorder(new TitledBorder(null, "Alter von Partner", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         partnerAlterPanel.setLayout(new FlowLayout());//GridLayout(3, 3, 10, 0)
@@ -219,7 +165,7 @@ public class View extends JFrame {
 		partnerAlterPanel.add(partnerAlterBis);
 		c.add(partnerAlterPanel);
 		
-		//Panel für Geschlecht von Partner
+		//Panel für Geschlecht von Partner (JComboBox)
 		partnerGeschlechtPanel = new JPanel();
         //partnerGeschlechtPanel.setBorder(new TitledBorder(null, "Geschlecht von Partner", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         partnerGeschlechtPanel.setLayout(new GridLayout(3, 3, 10, 0));
@@ -233,7 +179,7 @@ public class View extends JFrame {
         partnerGeschlechtPanel.add(partnerGeschlechtComboBox);
         c.add(partnerGeschlechtPanel);
         
-        //Panel für Eigenschaft von Partner
+        //Panel für 1 Eigenschaft von Partner (JComboBox)
         partnerEigenschaftenPanel = new JPanel();
         partnerEigenschaftenPanel.setLayout(new GridLayout(1, 3, 10, 0));
         partnerEigenschaftenComboBox = new JComboBox <String>(partnerEigenschaftenListe);
@@ -250,227 +196,122 @@ public class View extends JFrame {
 		matchButton.setFont(fontBeschreibung);
 		c.add(matchButton);
 	}
-			
+		/**
+		 * Diese Methode verknüpft das View mit dem zugehörigen Controller.	
+		 * @param controller
+		 */
 		public void setController(Controller controller) {
-		this.controller = controller;
-		
-		//JComboBox ItemListener
-		benutzerEigenschaftenComboBox1.addItemListener(this.controller.getItemChangeListener());
-		benutzerEigenschaftenComboBox2.addItemListener(this.controller.getItemChangeListener());
-		benutzerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
-		partnerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
-		partnerEigenschaftenComboBox.addItemListener(this.controller.getItemChangeListener());
-		
-		//JButtons ActionListener
-		saveButton.addActionListener(this.controller.getSaveButtonListener());//neu
-		matchButton.addActionListener(this.controller.getMatchButtonListener());//überprüfen
-		this.addWindowListener(this.controller.getBeendenListener());
+			this.controller = controller;
+			
+			//JComboBox ItemListener
+			benutzerEigenschaftenComboBox1.addItemListener(this.controller.getItemChangeListener());
+			benutzerEigenschaftenComboBox2.addItemListener(this.controller.getItemChangeListener());
+			benutzerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
+			partnerGeschlechtComboBox.addItemListener(this.controller.getItemChangeListener());
+			partnerEigenschaftenComboBox.addItemListener(this.controller.getItemChangeListener());
+			
+			//JButtons ActionListener
+			saveButton.addActionListener(this.controller.getSaveButtonListener());//neu
+			matchButton.addActionListener(this.controller.getMatchButtonListener());//überprüfen
+			this.addWindowListener(this.controller.getBeendenListener());
 	}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerVornameFeld zurück
+		 * @return benutzerVornameFeld 
+		 */
 		public JTextField getBenutzerVornameFeld() {
 			return benutzerVornameFeld;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerNachnameFeld zurück
+		 * @return benutzerNachnameFeld
+		 */
 		public JTextField getBenutzerNachnameFeld() {
 			return benutzerNachnameFeld;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerAlterFeld zurück
+		 * @return benutzerAlterFeld
+		 */
 		public JTextField getBenutzerAlterFeld() {
 			return benutzerAlterFeld;
 		}
-		
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerEigenschaftenComboBox1 zurück
+		 * @return benutzerEigenschaftenComboBox1
+		 */
 		public JComboBox <String> getBenutzerEigenschaftenComboBox1() {
 			return benutzerEigenschaftenComboBox1;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerEigenschaftenComboBox2 zurück
+		 * @return benutzerEigenschaftenComboBox2
+		 */
 		public JComboBox <String> getBenutzerEigenschaftenComboBox2() {
 			return benutzerEigenschaftenComboBox2;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf benutzerEigenschaftenListe zurück
+		 * @return benutzerEigenschaftenListe
+		 */
 		public String[] getBenutzerEigenschaftenListe() {
 			return benutzerEigenschaftenListe;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf getBenutzerGeschlechtComboBox zurück
+		 * @return getBenutzerGeschlechtComboBox
+		 */
 		public JComboBox <String> getBenutzerGeschlechtComboBox() {
 			return benutzerGeschlechtComboBox;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf partnerAlterVon zurück
+		 * @return partnerAlterVon
+		 */
 		public JTextField getPartnerAlterVon() {
 			return partnerAlterVon;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf partnerAlterBis zurück
+		 * @return partnerAlterBis
+		 */
 		public JTextField getPartnerAlterBis() {
 			return partnerAlterBis;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf partnerGeschlechtComboBox zurück
+		 * @return partnerGeschlechtComboBox
+		 */
 		public JComboBox <String> getPartnerGeschlechtComboBox() {
 			return partnerGeschlechtComboBox;
 		}
-		
+		/**
+		 * 	Die Methode liefert eine Referenz auf partnerEigenschaftenComboBox zurück
+		 * @return partnerEigenschaftenComboBox
+		 */
 		public JComboBox <String> getPartnerEigenschaftenComboBox() {
 			return partnerEigenschaftenComboBox;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf partnerEigenschaftenListe zurück
+		 * @return partnerEigenschaftenListe
+		 */
 		public String[] getPartnerEigenschaftenListe() {
 			return partnerEigenschaftenListe;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf saveButton zurück
+		 * @return saveButton
+		 */
 		public JButton getSaveButton() {
 			return saveButton;
 		}
-
+		/**
+		 * 	Die Methode liefert eine Referenz auf matchButton zurück
+		 * @return matchButton
+		 */
 		public JButton getMatchButton() {
 			return matchButton;
 		}
-	
-	
-//	public Controller controller;
-//	
-//	// Allgemein
-//	private Font fontBeschreibung;
-//	private Font fontTextfelder;
-//	
-//	// ContentPane
-//	private Container c;
-//	
-//	// Erstes Panel
-//	private JPanel beschreibungPanel;
-//	private JLabel beschreibungLabel;
-//	
-//	// Zweites Panel
-//	private JPanel aufgabePanel;
-//	private JTextField linkerOperandTextField;
-//    private JTextField rechterOperandTextField;
-//	private JComboBox<String> operatorComboBox;
-//	private String[] operatoren = {"+", "-"};
-//	private JLabel istgleichLabel;
-//	private JTextField ergebnisTextField;
-//	
-//	// Drittes Panel
-//	private JPanel ergebnisPanel;
-//	private JLabel feedbackLabel;
-//	
-//	// Viertes Panel
-//	private JPanel buttonPanel;
-//	private JButton neuButton;
-//	private JButton ueberpruefenButton;
-//	
-//	
-//	// Menue
-//	private JMenuBar menuBar;
-//	private JMenu menu;
-//	private ButtonGroup group;
-//	private JRadioButtonMenuItem items[];
-//	
-//	
-//	/**
-//	 * Konstruktor der Klasse
-//	 * @param name Titel des Fensters
-//	 */
-//	public View(String name) {		
-//		// Allgemein
-//		setTitle(name);
-//		c = getContentPane();
-//		c.setLayout(new GridLayout(4, 1, 10, 10));
-//		((JPanel) c).setBorder(new EmptyBorder(5, 5, 5, 5));
-//		fontBeschreibung = new Font("Tahoma", Font.PLAIN, 20);
-//		fontTextfelder = new Font("Tahoma", Font.PLAIN, 16);
-//		
-//		// Erstes Panel aufbauen
-//		beschreibungPanel = new JPanel(new BorderLayout());
-//		beschreibungLabel = new JLabel("Wählen Sie den richtigen Rechenoperator aus:", JLabel.CENTER);
-//		beschreibungLabel.setFont(fontBeschreibung);
-//		beschreibungPanel.add(beschreibungLabel, BorderLayout.CENTER);
-//		
-//		// Zweites Panel aufbauen
-//		aufgabePanel = new JPanel(new GridLayout(1, 5, 10, 0));
-//		aufgabePanel.setBorder(new TitledBorder(null, "Aufgabe", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-//		linkerOperandTextField = new JTextField();
-//		linkerOperandTextField.setEditable(false);
-//		linkerOperandTextField.setFont(fontTextfelder);
-//		rechterOperandTextField = new JTextField();
-//		rechterOperandTextField.setEditable(false);
-//		rechterOperandTextField.setFont(fontTextfelder);
-//		operatorComboBox = new JComboBox<String>(operatoren);
-//		istgleichLabel = new JLabel("=", JTextField.CENTER);
-//		ergebnisTextField = new JTextField();
-//		ergebnisTextField.setEditable(false);
-//		ergebnisTextField.setFont(fontTextfelder);
-//		aufgabePanel.add(linkerOperandTextField);
-//		aufgabePanel.add(operatorComboBox);
-//		aufgabePanel.add(rechterOperandTextField);
-//		aufgabePanel.add(istgleichLabel);
-//		aufgabePanel.add(ergebnisTextField);
-//		
-//		// Drittes Panel aufbauen
-//		ergebnisPanel = new JPanel(new BorderLayout());
-//		ergebnisPanel.setBorder(new TitledBorder(null, "Ergebnis", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-//		feedbackLabel = new JLabel("", JLabel.CENTER);
-//		feedbackLabel.setFont(fontBeschreibung);
-//		ergebnisPanel.add(feedbackLabel, BorderLayout.CENTER);
-//		
-//		// Viertes Panel aufbauen
-//		buttonPanel = new JPanel(new GridLayout(1, 2));
-//		neuButton = new JButton("Neue Rechenaufgabe");
-//		ueberpruefenButton = new JButton("Überprüfen");
-//		buttonPanel.add(neuButton);
-//		buttonPanel.add(ueberpruefenButton);
-//		
-//		// Menue aufbauen
-//		menuBar = new JMenuBar();
-//		menu = new JMenu("Schwierigkeit");
-//		group = new ButtonGroup();
-//		items = new JRadioButtonMenuItem[2];
-//		items[0] = new JRadioButtonMenuItem("Einfach");
-//		items[0].setMnemonic(java.awt.event.KeyEvent.VK_E);
-//		items[0].setSelected(true);
-//		items[1] = new JRadioButtonMenuItem("Schwer");
-//		items[1].setMnemonic(java.awt.event.KeyEvent.VK_S);
-//		for (int i = 0; i < items.length; i++) {
-//			group.add(items[i]);
-//		}
-//		for (int i = 0; i < items.length; i++) {
-//			menu.add(items[i]);
-//		}
-//		menuBar.add(menu);
-//		
-//		// Fenster aufbauen
-//		setJMenuBar(menuBar);
-//		c.add(beschreibungPanel);
-//		c.add(aufgabePanel);
-//		c.add(ergebnisPanel);
-//		c.add(buttonPanel);
-//		
-//	}
-//	
-//	public void setController(Controller controller) {
-//		this.controller = controller;
-//		neuButton.addActionListener(this.controller.getNeuButtonListener());
-//		ueberpruefenButton.addActionListener(this.controller.getUeberpruefenButtonListener());
-//		this.addWindowListener(this.controller.getBeendenListener());
-//	}
-//	
-//	public JLabel getFeedbackLabel() {
-//		return feedbackLabel;
-//	}
-//	
-//	public JRadioButtonMenuItem[] getItems() {
-//		return items;
-//	}
-//	
-//	public JTextField getLinkerOperandTextField() {
-//		return linkerOperandTextField;
-//	}
-//	
-//	public JTextField getRechterOperandTextField() {
-//		return rechterOperandTextField;
-//	}
-//	
-//	public JTextField getErgebnisTextField() {
-//		return ergebnisTextField;
-//	}
-//	
-//	public JComboBox<String> getOperatorComboBox() {
-//		return operatorComboBox;
-//	}
+
 }
